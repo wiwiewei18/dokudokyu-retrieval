@@ -2,7 +2,7 @@ import { AggregateRoot } from 'src/shared/domain/base.aggregate';
 
 interface SearchableDocumentProps {
   documentId: string;
-  name: string;
+  name?: string;
   extractedContent?: string;
   summary?: string;
   createdAt: Date;
@@ -18,7 +18,12 @@ export class SearchableDocument extends AggregateRoot<string> {
     this.props = props;
   }
 
-  public static create(props: { documentId: string; name: string }) {
+  public static create(props: {
+    documentId: string;
+    name?: string;
+    extractedContent?: string;
+    summary?: string;
+  }) {
     const id = crypto.randomUUID();
     const now = new Date();
 
@@ -39,7 +44,7 @@ export class SearchableDocument extends AggregateRoot<string> {
     return this.props.documentId;
   }
 
-  get name(): string {
+  get name(): string | undefined {
     return this.props.name;
   }
 

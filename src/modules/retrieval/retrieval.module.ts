@@ -3,8 +3,10 @@ import { SearchEngineModule } from 'src/shared/infra/searchEngine/searchEngine.m
 import { IndexDocumentNameUseCase } from './app/useCases/indexDocumentName.useCase';
 import { DocumentUploadedSubscriber } from './subscriber/documentUploaded.subscriber';
 import { ISearchableDocumentRepoToken } from './domain/repos/searchableDocument.repo.interface';
-import { ElasticsearchSearchableDocumentRepo } from './infra/elasticsearchSearchableDocument.repo';
+import { ElasticsearchSearchableDocumentRepo } from './infra/repos/elasticsearchSearchableDocument.repo';
 import { EventBusModule } from 'src/shared/infra/eventBus/eventBus.module';
+import { KnowledgeStoredSubscriber } from './subscriber/knowledgeStored.subscriber';
+import { IndexDocumentKnowledgeUseCase } from './app/useCases/indexDocumentKnowledge.useCase';
 
 @Module({
   imports: [SearchEngineModule, EventBusModule.forRoot('retrieval.exchange')],
@@ -15,8 +17,10 @@ import { EventBusModule } from 'src/shared/infra/eventBus/eventBus.module';
     },
 
     IndexDocumentNameUseCase,
+    IndexDocumentKnowledgeUseCase,
 
     DocumentUploadedSubscriber,
+    KnowledgeStoredSubscriber,
   ],
 })
 export class RetrievalModule {}
