@@ -19,8 +19,11 @@ export class IndexDocumentKnowledgeUseCase {
   ) {}
 
   async execute(input: IndexDocumentKnowledgeInput): Promise<void> {
-    const searchableDocument = SearchableDocument.create({
-      documentId: input.documentId,
+    const searchableDocument =
+      await this.searchableDocumentRepo.findByDocumentId(input.documentId);
+    if (!searchableDocument) return;
+
+    searchableDocument.indexKnowledge({
       extractedContent: input.extractedContent,
       summary: input.summary,
     });

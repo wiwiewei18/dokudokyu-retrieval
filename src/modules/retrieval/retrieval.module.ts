@@ -7,9 +7,12 @@ import { ElasticsearchSearchableDocumentRepo } from './infra/repos/elasticsearch
 import { EventBusModule } from 'src/shared/infra/eventBus/eventBus.module';
 import { KnowledgeStoredSubscriber } from './subscriber/knowledgeStored.subscriber';
 import { IndexDocumentKnowledgeUseCase } from './app/useCases/indexDocumentKnowledge.useCase';
+import { SearchDocumentListUseCase } from './app/useCases/searchDocumentList.useCase';
+import { RetrievalController } from './api/retrieval.controller';
 
 @Module({
   imports: [SearchEngineModule, EventBusModule.forRoot('retrieval.exchange')],
+  controllers: [RetrievalController],
   providers: [
     {
       provide: ISearchableDocumentRepoToken,
@@ -18,6 +21,7 @@ import { IndexDocumentKnowledgeUseCase } from './app/useCases/indexDocumentKnowl
 
     IndexDocumentNameUseCase,
     IndexDocumentKnowledgeUseCase,
+    SearchDocumentListUseCase,
 
     DocumentUploadedSubscriber,
     KnowledgeStoredSubscriber,

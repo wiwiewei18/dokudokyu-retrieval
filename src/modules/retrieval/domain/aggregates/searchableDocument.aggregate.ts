@@ -20,7 +20,7 @@ export class SearchableDocument extends AggregateRoot<string> {
 
   public static create(props: {
     documentId: string;
-    name?: string;
+    name: string;
     extractedContent?: string;
     summary?: string;
   }) {
@@ -34,6 +34,23 @@ export class SearchableDocument extends AggregateRoot<string> {
     });
 
     return searchableDocument;
+  }
+
+  static fromPersistence(props: {
+    id: string;
+    documentId: string;
+    name: string;
+    extractedContent?: string;
+    summary?: string;
+    createdAt: Date;
+  }): SearchableDocument {
+    return new SearchableDocument(props.id, {
+      documentId: props.documentId,
+      name: props.name,
+      extractedContent: props.extractedContent,
+      summary: props.summary,
+      createdAt: props.createdAt,
+    });
   }
 
   get id(): string {
@@ -58,5 +75,13 @@ export class SearchableDocument extends AggregateRoot<string> {
 
   get createdAt(): Date {
     return this.props.createdAt;
+  }
+
+  public indexKnowledge(props: {
+    extractedContent: string;
+    summary: string;
+  }): void {
+    this.props.extractedContent = props.extractedContent;
+    this.props.summary = props.summary;
   }
 }
