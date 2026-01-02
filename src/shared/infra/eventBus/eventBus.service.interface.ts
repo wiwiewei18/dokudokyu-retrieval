@@ -1,0 +1,9 @@
+import { DomainEvent } from 'src/shared/domain/base.event';
+
+export const IEventBusToken = Symbol('IEventBus');
+
+export interface IEventBus {
+  publish(event: DomainEvent): Promise<void>;
+
+  publishAll(events: DomainEvent[]): Promise<void>;
+}
