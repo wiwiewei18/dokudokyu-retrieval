@@ -16,6 +16,11 @@ interface SearchableDocumentSource {
   summary?: string;
   extractedContent?: string;
   createdAt: Date;
+  highlights?: {
+    name?: string[];
+    summary?: string[];
+    extractedContent?: string[];
+  };
 }
 
 @Injectable()
@@ -79,6 +84,18 @@ export class ElasticsearchSearchableDocumentRepo implements ISearchableDocumentR
           fields: ['name^3', 'summary^2', 'extractedContent'],
         },
       },
+      highlight: {
+        pre_tags: ['<mark>'],
+        post_tags: ['</mark>'],
+        fields: {
+          name: {},
+          summary: {},
+          extractedContent: {
+            fragment_size: 150,
+            number_of_fragments: 3,
+          },
+        },
+      },
     });
 
     return {
@@ -91,6 +108,7 @@ export class ElasticsearchSearchableDocumentRepo implements ISearchableDocumentR
         name: hit._source?.name,
         extractedContent: hit._source?.extractedContent,
         summary: hit._source?.summary,
+        highlights: hit.highlight,
       })),
     };
   }

@@ -15,6 +15,11 @@ interface Document {
   name?: string;
   extractedContent?: string;
   summary?: string;
+  highlights?: {
+    name?: string[];
+    summary?: string[];
+    extractedContent?: string[];
+  };
 }
 
 export interface SearchDocumentListOutput {

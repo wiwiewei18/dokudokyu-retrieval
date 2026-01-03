@@ -9,7 +9,7 @@ export class RetrievalController {
 
   @Get()
   async search(
-    @Query('q') keyword: string,
+    @Query('query') keyword: string,
     @Query('page') page?: number,
     @Query('size') size?: number,
   ) {
